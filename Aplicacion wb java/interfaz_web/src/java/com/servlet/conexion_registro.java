@@ -45,10 +45,16 @@ public class conexion_registro extends HttpServlet {
           String usuario =request.getParameter("txtusuario");
           String contra =request.getParameter("txtcontra");
           String verificarpass = request.getParameter("txtcontracompara");
+          String direccion =request.getParameter("txtdireccion");
+          String telefono = request.getParameter("txttelefono");
+          String edad = request.getParameter("txtedad");
+          String file = request.getParameter("subir1");
+          
+          System.out.println("------------*********************-----------------*********  " +file);
           
          if (contra.equals(verificarpass)) {
              
-   
+              
             
            try{
                

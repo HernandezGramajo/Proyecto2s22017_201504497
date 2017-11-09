@@ -14,6 +14,7 @@
        
     </head>
 <body><br><br><br><br><br>
+    
     <center><h1>REGISTRO</h1></center>
     <br>
         <form action="conexion_registro" method ="POST">
@@ -27,10 +28,36 @@
                     <th align="right">Contraseña:</th>
                     <td><input type="text" name ="txtcontra" placeholder = "contraseña"></td>
                 </tr>
-                                <tr>
-                    <th align="right">Verificar Cotraseña:</th>
-                    <td><input type="text" name ="txtcontracompara" placeholder = "comparar contrseña"></td>
+                 <tr>
+                    <th align="right">Contraseña:</th>
+                    <td><input type="text" name ="txtcontracompara" placeholder = "verificar contraseña"></td>
                 </tr>
+                 <tr>
+                    <th align="right">Dirección:</th>
+                    <td><input type="text" name ="txtdireccion" placeholder = "direccion"></td>
+                </tr>
+                
+                 <tr>
+                    <th align="right">Teléfono:</th>
+                    <td><input type="text" name ="txttelefono" placeholder = "0000-0000"></td>
+                </tr>
+                 <tr>
+                    <th align="right">Edad:</th>
+                    <td><input type="text" name ="txtedad" placeholder = "edad"></td>
+                </tr>
+                
+                <br><br>
+                  <tr>
+                  <th align="right">Subir archivo:</th>
+                  <td><input type ="file" name ="subir1"></td>
+                   <td colspan="2" align ="right"><input type ="submit" value = "subir" class="btn btn-primary"></td>
+                  
+                  
+                  
+                </tr>
+                <br><br>
+                
+                
                 <tr>
                     <td colspan="2" align ="right"><input type ="submit" value = "Registrar" class="btn btn-primary"></td>
                     <td colspan="1" align ="left" ><p>    </p><a href="Loginn.jsp">atras</a></td>
