@@ -349,6 +349,10 @@ if __name__ == "__main__":
     arbol.insertar("3347","s2")
     arbol.insertar("4347","s3")
     arbol.insertar("5347","s4")
+    arbol.imprimir_arbol()
+    arbol.modificaclave("4347","3397")
+    arbol.insertar("7895","sd")
+
 
     arbol.imprimir_arbol()
     #arbol.eliminar_publico("8856") # este metodo no sirve
