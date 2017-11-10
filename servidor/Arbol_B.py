@@ -1,7 +1,8 @@
 
 class Nodo_Carpeta:
-    def __init__(self, clave):
+    def __init__(self, clave,bitacora):
         self.clave = clave
+        self.bitacora = bitacora
         self.nombre = "/" + clave
         self.sub_carp = ArbolB()
 
@@ -18,7 +19,43 @@ class Pagina:
         cadena = ""
         for x in range(0, self.cuentas):
             cadena = cadena + "| " + str(self.claves[x].clave) + " |"
+
         return cadena
+
+#--------------------- Aqui lo encuentra
+    def print_atributo(self,clave):
+        cadena = ""
+        for x in range(0, self.cuentas):
+            if self.claves[x].clave==clave:
+                #print "entro  "+ self.claves[x].bitacora
+                cadena = self.claves[x].bitacora
+
+
+        return cadena
+
+
+#--------------------- Aqui lo modifica
+    def print_modificar(self,clave,atributo):
+        cadena = False
+        for x in range(0, self.cuentas):
+            if self.claves[x].clave==clave:
+                self.claves[x].bitacora = atributo
+                cadena = True
+
+        return cadena
+
+
+#--------------------- Aqui  modifica la clave
+    def print_modificar_clave(self,clave,nuevo):
+        cadena = False
+        for x in range(0, self.cuentas):
+            if self.claves[x].clave==clave:
+                self.claves[x].clave = nuevo
+                cadena = True
+
+        return cadena
+
+
 
 
 class ArbolB:
@@ -40,8 +77,8 @@ class ArbolB:
         else:
             return False
 
-    def insertar(self, cla):
-        cl = Nodo_Carpeta(cla)
+    def insertar(self, cla,bitacora):
+        cl = Nodo_Carpeta(cla,bitacora)
         self.insertar_p(cl, self.p)
 
     def insertar_p(self, cl, raiz):
@@ -122,6 +159,7 @@ class ArbolB:
             while cl.clave < raiz.claves[x - 1].clave and x > 1:
                 x = x - 1
             if cl.clave == raiz.claves[x - 1].clave:
+                print raiz.claves[x - 1]
                 self.Existe = True
             else:
                 self.Existe = False
@@ -140,11 +178,96 @@ class ArbolB:
             for x in range(0, pagina.cuentas + 1):
                 if pagina.ramas[x] is not None:
                     if pagina.ramas[x].print_node() is not "":
-                        self.cadena = self.cadena + '"' + pagina.print_node() + '"' + ' -> "' + pagina.ramas[
-                            x].print_node() + '";' + "\n"
+                        self.cadena = self.cadena + '"' + pagina.print_node() + '"' + ' -> "' + pagina.ramas[x].print_node() + '";' + "\n"
+
                     if pagina.ramas[x].print_node() is "":
                         self.cadena = self.cadena + '"' + pagina.print_node() + '";\n'
                     self.enlazar_ramas(pagina.ramas[x])
+
+    # ----------------------------------- busca las claves
+    def busca(self,clave):
+        cadena= self.buscatodo(self.p,clave)
+        print cadena
+        return cadena
+
+    def buscatodo(self,pagina,clave):
+        cadena=""
+        if (pagina.cuentas > 0) and (pagina.ramas[0] is not None):
+            for x in range(0, pagina.cuentas + 1):
+                if pagina.ramas[x] is not None:
+                    if pagina.ramas[x].print_node() is not "":
+                        busca1 = pagina.print_atributo(clave)
+                        busca2= pagina.ramas[x].print_atributo(clave)
+
+                        if busca1 != "":
+
+                            cadena= busca1
+                        elif busca2 != "":
+                            cadena=busca2
+
+                        else:
+
+                            cadena = "Dato no en contrado"
+        return cadena
+
+
+    # ----------------------------------- modifica o agrega
+    def modifica(self,clave,atributo):
+        cadena = self.modificatodo(self.p,clave,atributo)
+        print cadena
+        return cadena
+
+    def modificatodo(self,pagina,clave,atributo):
+        cadena = False
+        if (pagina.cuentas > 0) and (pagina.ramas[0] is not None):
+            for x in range(0, pagina.cuentas + 1):
+                if pagina.ramas[x] is not None:
+                    if pagina.ramas[x].print_node() is not "":
+                        modifica1 = pagina.print_modificar(clave,atributo)
+                        modifica2 = pagina.ramas[x].print_modificar(clave,atributo)
+
+                        if modifica1 == True:
+
+                            cadena = modifica1
+                        elif modifica2 == True:
+                            cadena = modifica2
+
+        return cadena
+
+
+    # -----------------------------------
+    # ----------------------------------- modifica la clave
+    def modificaclave(self,clave,nueva):
+        cadena = self.modifica_clave_nueva(self.p,clave,nueva)
+        print cadena
+        return cadena
+
+    def modifica_clave_nueva(self,pagina,clave,nueva):
+        cadena = False
+        if (pagina.cuentas > 0) and (pagina.ramas[0] is not None):
+            for x in range(0, pagina.cuentas + 1):
+                if pagina.ramas[x] is not None:
+                    if pagina.ramas[x].print_node() is not "":
+                        modifica1 = pagina.print_modificar_clave(clave,nueva)
+                        modifica2 = pagina.ramas[x].print_modificar_clave(clave,nueva)
+
+                        if modifica1 == True:
+
+                            cadena = modifica1
+                        elif modifica2 == True:
+                            cadena = modifica2
+
+        return cadena
+
+
+    # -----------------------------------
+
+
+
+
+
+
+
 
     def eliminar_publico(self, clave):
         self.eliminar(self.p, clave)
@@ -167,12 +290,15 @@ class ArbolB:
             else:
                 self.lista_aux.append(pagina.claves[x])
 
+
+
     def re_insert(self):
         for c in self.lista_aux:
             self.insertar(c)
 
     def print_root(self):
         print(self.p.print_node())
+
 
     def listar_carpetas(self):
         # metodo publico
@@ -215,16 +341,19 @@ if __name__ == "__main__":
 
     arbol = ArbolB()
 
-    arbol.insertar("1234")
-    arbol.insertar("7415")
-    arbol.insertar("8756")
-    arbol.insertar("8856")
-    arbol.insertar("1347")
-    arbol.insertar("3347")
-    arbol.insertar("4347")
-    arbol.insertar("5347")
-    arbol.insertar("6347")
-
+    arbol.insertar("1234","saa")
+    arbol.insertar("7415","se")
+    arbol.insertar("8756","si")
+    arbol.insertar("8856","so")
+    arbol.insertar("3349","modificado")
+    arbol.insertar("3347","s2")
+    arbol.insertar("4347","s3")
+    arbol.insertar("5347","s4")
 
     arbol.imprimir_arbol()
+    #arbol.eliminar_publico("8856") # este metodo no sirve
+
+
+
+
 

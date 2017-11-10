@@ -12,22 +12,22 @@ class ListasimpleCicular:
         else:
             return False
 
-    def agregar_inicio(self, dato):
+    def agregar_inicio(self, dato,nivel,habitacion):
         if self.vacia():
-            self.primero = self.ultimo = Nodo(dato)
+            self.primero = self.ultimo = Nodo(dato,nivel,habitacion)
         else:
-            aux = Nodo(dato)
+            aux = Nodo(dato,nivel,habitacion)
             aux.siguiente = self.primero
             self.primero.anterior = aux
             self.primero = aux
         self.__unir_nodos()
 
-    def agregar_final(self,dato):
+    def agregar_final(self,dato,nivel,habitacion):
         if self.vacia():
-            self.primero=self.ultimo=Nodo(dato)
+            self.primero=self.ultimo=Nodo(dato,nivel,habitacion)
         else:
             aux= self.ultimo
-            self.ultimo = aux.siguiente = Nodo(dato)
+            self.ultimo = aux.siguiente = Nodo(dato,nivel,habitacion)
             self.ultimo.anterior = aux
         self.__unir_nodos()
 
@@ -98,7 +98,7 @@ class ListasimpleCicular:
         texto=""
         cont =0
         while aux:
-            texto += str(cont) +"[label =\"" + aux.dato + "\"];\n"
+            texto += str(cont) +"[label =\""  +aux.nivel+"\n" + aux.habitacion+"\n"+ aux.dato + "\"];\n"
 
             aux = aux.siguiente
 
@@ -132,12 +132,12 @@ class ListasimpleCicular:
 if __name__ == "__main__":
     l = ListasimpleCicular() # insertar al final
 
-    l.agregar_inicio("nivel 1\n numero 7 \n 17")
-    l.agregar_inicio("nivel 1\n numero 8 \n 18")
-    l.agregar_inicio("nivel 4\n numero 7 \n 47")
-    l.agregar_inicio("nivel 1\n numero 70 \n 170")
-    l.agregar_inicio("nivel 5\n numero 7 \n 57")
-    l.agregar_inicio("nivel 3\n numero 27 \n 327")
+    l.agregar_inicio("nivel 1"," numero 7"," 17")
+    l.agregar_inicio("nivel 1"," numero 8 "," 18")
+    l.agregar_inicio("nivel 4"," numero 7 "," 47")
+    l.agregar_inicio("nivel 1","numero 70 "," 170")
+    l.agregar_inicio("nivel 5"," numero 7 ","57")
+    l.agregar_inicio("nivel 3","numero 27 "," 327")
     l.graficar()
     l.eliminar_inicio()
     l.graficar()

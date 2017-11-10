@@ -46,9 +46,9 @@ class principal():
         telefono = str(request.form['telefono'])
         edad = str(request.form['edad'])
 
-        listadoble.agregar_inicio(usuario,password,direccion,telefono,edad) # falta agregar datos a la lista doble
-        print ("contra verificada y correcta registado")
-        return "True"
+        respuesta =listadoble.agregar_inicio(usuario,password,direccion,telefono,edad) # falta agregar datos a la lista doble
+        print ("datos ingresado correctamente "+respuesta )
+        return respuesta
 
     @app.route('/ingreso', methods=['POST'])
     def metodo4():
@@ -56,15 +56,15 @@ class principal():
         usuario = str(request.form['usuario'])
         password = str(request.form['password'])
 
-        listadoble.buscar(usuario, password)  # falta agregar datos a la lista doble
-        print ("contra verificada y correcta registado")
-        return "True"
+        respuesta =listadoble.buscarusuario(usuario, password)  # falta agregar datos a la lista doble
+        print ("contra verificada " + respuesta)
+        return respuesta
 
     @app.route('/habitacioneslista', methods=['POST'])
-    def metodo4():
+    def metodo5():
 
-        nivel= str(request.form['nivel'])
-        numero = str(request.form['numero'])
+        nivel= "Nivel "+str(request.form['nivel'])
+        numero = "Habitacion "+str(request.form['numero'])
         codigo = str(nivel+numero)
 
         listasimple.agregar_inicio(codigo,nivel,numero)
@@ -74,7 +74,7 @@ class principal():
 
 
     @app.route('/gastosavl', methods=['POST'])
-    def metodo5():
+    def metodo6():
 
         cuenta= str(request.form['cuenta'])
         monto = str(request.form['monto'])

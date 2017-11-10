@@ -13,25 +13,26 @@ class ListaCircularDobleEnlazada:
         else:
             return False
 
-    def agregar_inicio(self, dato):
+    def agregar_inicio(self, dato,password,direccion,telefono,edad):
         if self.vacia():
-            self.primero = self.ultimo = Nodo(dato)
+            self.primero = self.ultimo = Nodo(dato,password,direccion,telefono,edad)
         else:
-            aux = Nodo(dato)
+            aux = Nodo(dato,password,direccion,telefono,edad)
             aux.siguiente = self.primero
             self.primero.anterior = aux
             self.primero = aux
         self.__unir_nodos()
+        return True
 
-    def agregar_final(self,dato):
+    def agregar_final(self,dato,password,direccion,telefono,edad):
         if self.vacia():
-            self.primero=self.ultimo=Nodo(dato)
+            self.primero=self.ultimo=Nodo(dato,password,direccion,telefono,edad)
         else:
             aux= self.ultimo
-            self.ultimo = aux.siguiente = Nodo(dato)
+            self.ultimo = aux.siguiente = Nodo(dato,password,direccion,telefono,edad)
             self.ultimo.anterior = aux
         self.__unir_nodos()
-
+        return True
     def __unir_nodos(self):
         if self.primero !=None:
             self.primero.anterior = self.ultimo
@@ -55,24 +56,94 @@ class ListaCircularDobleEnlazada:
         else:
             self.ultimo = self.ultimo.anterior
         self.__unir_nodos()
-
+#------------------------ busca todos los datos de una persona
     def buscar(self,dato):
+        cadena =False
         aux = self.primero
         while aux:
             if aux.dato == dato:
-                print aux.dato
 
+                cadena = "Usuario : "+aux.dato +"  Password: "+aux.password+"  Direccion : "+ aux.direccion+"  Telefono : "+ aux.telefono+"  Edad : "+aux.edad
+                print cadena
+                return cadena
+            else:
+                aux = aux.siguiente
+                if aux == self.primero:
+                    print False
+                    return False
+
+
+#----------------------------- busca y compara si el usuario existe y si su contrasena es valida
+
+    def buscarusuario(self, dato, passw):
+        cadena = False
+        aux = self.primero
+        while aux:
+             if aux.dato == dato and aux.password == passw:
+                  cadena = True
+                  print cadena
+                  return cadena
+
+             else:
+                 aux = aux.siguiente
+                 if aux == self.primero:
+                     cadena = False
+                     print cadena
+                     return  cadena
+
+
+                #------------ Modificar usuario
+
+    def modificarusuario(self, dato,nuevo):  # puede modificar el nombre del usuario
+        aux = self.primero
+        while aux:
+            if aux.dato == dato:
+                aux.dato=nuevo
+                return True
+            else:
+                aux = aux.siguiente
+                if aux == self.primero:
+                    return False
+#------------------------------modificar password
+    def modificarpassword(self, dato,nuevo):
+        aux = self.primero
+        while aux:
+            if aux.dato == dato:
+                aux.password=nuevo
+                return True
+            else:
+                aux = aux.siguiente
+                if aux == self.primero:
+                    return False
+#---------------------- modificar direccion
+    def modificardireccion(self, dato,nuevo):
+        aux = self.primero
+        while aux:
+            if aux.dato == dato:
+                aux.direccion=nuevo
+                return True
+            else:
+                aux = aux.siguiente
+                if aux == self.primero:
+                    return False
+#-----------------------modificiar telefono
+    def modificartelefono(self, dato,nuevo):
+        aux = self.primero
+        while aux:
+            if aux.dato == dato:
+                aux.telefono=nuevo
                 return True
             else:
                 aux = aux.siguiente
                 if aux == self.primero:
                     return False
 
-    def modificar(self, dato,nuevo):  # puede modificar el nombre del usuario
+#------------------------- modificiar edad
+    def modificaredad(self, dato,nuevo):
         aux = self.primero
         while aux:
             if aux.dato == dato:
-                aux.dato=nuevo
+                aux.edad=nuevo
                 return True
             else:
                 aux = aux.siguiente
@@ -84,6 +155,8 @@ class ListaCircularDobleEnlazada:
     def recorrer_inicio_a_fin(self):
         aux = self.primero
         while aux:
+            cadena = "Usuario : " + aux.dato + "  Password: " + aux.password + "  Direccion : " + aux.direccion + "  Telefono : " + aux.telefono + "  Edad : " + aux.edad
+            print cadena
             print (aux.dato)
             aux = aux.siguiente
             if aux == self.primero:
@@ -93,9 +166,11 @@ class ListaCircularDobleEnlazada:
         aux = self.ultimo
         while aux:
             print (aux.dato)
+            print (aux.password)
             aux = aux.anterior
             if aux == self.ultimo:
                 break
+
     def graficar_inicio_a_fin(self):
         aux = self.primero
         texto=""
@@ -116,7 +191,7 @@ class ListaCircularDobleEnlazada:
 
         while (con<cont):
             l =con +1
-            print  con
+
             texto += str(con) + "->" + str(l) + ";\n"
             texto += str(l) + "->" + str(con) + ";\n"
             con = con+1
@@ -133,13 +208,19 @@ class ListaCircularDobleEnlazada:
 
 if __name__ == "__main__":
     l = ListaCircularDobleEnlazada()
-    l.agregar_inicio("hola")
-    l.agregar_inicio("hoa")
-    l.agregar_inicio("hla")
-    l.agregar_inicio("ho")
-
-
+    l.agregar_inicio("pablo","1232"," 4 ta avenidia","24338532","25")
+    l.agregar_inicio("hoa","2"," 4 ta avenidia","24338532","20")
+    l.agregar_inicio("hla","3"," 4 ta avenidia","24338532","2")
+    l.agregar_inicio("ho","4"," 4 ta avenidia","24338532","25\7")
+    l.modificarusuario("hla","luis")
+    l.modificarpassword("ho","pass")
+    l.modificardireccion("hoa","mixco")
+    l.modificartelefono("pablo","41414141")
+    l.modificaredad("ho","15")
+    l.recorrer_inicio_a_fin()
     l.graficar()
-    #l.modificar("1","luis")
-    #l.eliminar_inicio()
-    #l.graficar()
+    l.eliminar_inicio()
+    l.eliminar_ultimo()
+
+    l.buscar("hl")
+    l.buscarusuario("hla", "54")
