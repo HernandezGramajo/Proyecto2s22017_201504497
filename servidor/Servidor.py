@@ -21,24 +21,6 @@ class principal():
     @app.route('/') 
     def metodo1():
       return "WEB SERVICE PROYECTO 2 "
-
-    @app.route('/reservar',methods=['POST'])#Este metodo ingresa un usuario [Retorna SI se pudo crear el usuario de lo contrario retorna NO]
-    def metodo25():
-        parametro1 = str(request.form['mes'])
-        parametro2 = str(request.form['ano'])
-        parametro3 = str(request.form['dia'])
-
-        texto = ""
-        if(matriz.verificarExistencia(parametro1,parametro2,parametro3)==0):## vefica si ya existe fecha 
-            encabezadomes= matriz.insertar(parametro1)#Envio mi empresa y recibo un nodo empresa
-            encabezadofecha = matriz.insertar1(parametro2)#Envio mi depto y recibo el nodo depto
-            Nodo = matriz.insertarValor(encabezadomes,parametro3,parametro2,parametro3)
-            matriz.unir(encabezadofecha,Nodo)
-            texto = "SI"
-        else:
-            texto = "NO" # ya existe
-        return texto
-
 #------------------------------------ Lista doble enlazada y su medos
     @app.route('/registro', methods=['POST'])
     def metodo2():
@@ -279,11 +261,38 @@ class principal():
 
         print ("graficando  avl")
         return "True"
-
-    #------------------------/// Fin de metodos avl-------------------------------------------------------------------------
-
+#------------------------/// Fin de metodos avl-------------------------------------------------------------------------
 
 
+#----------------------------------inicio metodos de matriz dispersa----------------
+
+    @app.route('/reservar',methods=['POST'])
+    def metodo25():
+        parametro1 = str(request.form['mes'])
+        parametro2 = str(request.form['ano'])
+        parametro3 = str(request.form['dia'])
+
+        texto = ""
+        if(matriz.verificarExistencia(parametro1,parametro2,parametro3)==0):
+            encabezadomes= matriz.insertar(parametro1)
+            encabezadofecha = matriz.insertar1(parametro2)
+            Nodo = matriz.insertarValor(encabezadomes,parametro3,parametro2,parametro3)
+            matriz.unir(encabezadofecha,Nodo)
+            texto = "SI"
+        else:
+            texto = "NO" # ya existe
+        return texto
+
+
+    @app.route('/graficar_matrizdis',methods=['POST'])
+    def metodo26():
+
+       respuesta= matriz.getCodigoGraphviz()
+       return respuesta
+
+#---------------------------------/// fin matriz dispersa----------------
+
+# -----------------------inicio medotodos para la tabla hash----------------
 
 
     if __name__ == "__main__":
